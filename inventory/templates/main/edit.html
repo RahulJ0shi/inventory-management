@@ -1,0 +1,69 @@
+{% extends 'main/index.html' %}
+{% block content %}
+<div class="row tm-content-row tm-mt-big">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="bg-white tm-block">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="tm-block-title d-inline-block">Edit Product</h2>
+                        </div>
+                    </div>
+                    <div class="row mt-12 tm-edit-product-row">
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <form action="" class="tm-edit-product-form" method="POST">
+                            	{% csrf_token %}
+                            	{% for x in item %}
+                                <div class="input-group mb-12" style="margin-bottom:3px;">
+                                    <label for="name" class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-form-label">Product
+                                        Name
+                                    </label>
+                                    
+                                    <input id="name" name="pname" type="text" value="{{x.name}}" class="form-control validate col-xl-5 col-lg-5 col-md-12 col-sm-12" required>
+                                    
+                                </div>
+                                <div class="input-group mb-12" style="margin-bottom:3px;">
+                                    <label for="name" class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-form-label">Price 
+                                    </label>
+                                    <input id="name" name="pprice" type="number" value="{{x.price}}" class="form-control validate col-xl-5 col-lg-5 col-md-12 col-sm-12" required>
+                                </div>
+                                <div class="input-group mb-12" style="margin-bottom:3px;">
+                                    <label for="category" class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-form-label">Category</label>
+                                    <input id="name" name="pcategory" type="text" value="{{x.category}}" class="form-control validate col-xl-5 col-lg-5 col-md-12 col-sm-12" disabled="true" style="background-color: transparent;">                                    
+                                </div>
+                                <div class="input-group mb-12" style="margin-bottom:3px;">
+                                    <label for="expire_date" class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-form-label">Expire
+                                        Date
+                                    </label>
+                                    <input name="pexpire_date" type="text" placeholder="{{x.expire_date}}" class="form-control validate col-xl-5 col-lg-5 col-md-12 col-sm-12"
+                                        data-large-mode="true" disabled="true"  style="background-color: transparent;">
+                                </div>
+                                <div class="input-group mb-12" style="margin-bottom:3px;">
+                                    <label for="stock" class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-form-label">Units In
+                                        Stock
+                                    </label>
+                                    <input id="stock" name="punits" type="number" value="{{x.units}}" class="form-control validate col-xl-5 col-lg-5 col-md-12 col-sm-12" required>
+                                </div>
+                                <div class="input-group mb-12" style="margin-top:8px;">
+                                    <div class="ml-auto col-xl-10 col-lg-8 col-md-8 col-sm-7 pl-0">
+                                        <button type="submit" name="save_product" class="btn btn-primary" style="background-color: #00911b;color: white; border-radius: 10px;">Save</button>
+                                        <button type="submit" name="delete_product" class="btn btn-primary" style="background-color: #e80707;color: white; border-radius: 10px;">Delete</button>
+
+                                        {% for message in messages %}
+                    						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 alert alert-warning" role="alert" style="margin-top: 20px;">
+                        						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        						<strong>{{message}}</strong>
+                    						</div>
+                						{% endfor %}   
+                                    
+                                    </div>
+
+                                </div>
+                                {% endfor %}
+                            </form>                        
+                        </div>
+                    </div>
+                </div>
+            </div>            
+
+</div>
+{% endblock content%}

@@ -1,0 +1,104 @@
+{% extends 'main/index.html' %}
+{% block content %}
+
+<div class="container">
+        <!-- row -->
+        <div class="row tm-mt-big">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-8">
+                <div class="bg-white tm-block">
+                    <div class="row">
+                        <div class="col-4">
+                            <h2 class="tm-block-title d-inline-block">Add Product</h2>
+                        </div>
+                    </div>
+                    <div class="row mt-4 tm-edit-product-row">
+                        <div class="col-xl-7 col-lg-7 col-md-12">
+                            <form action="/add-product/" class="tm-edit-product-form" method="POST">
+                            
+                                <div class="input-group mb-3">
+                                    <label for="name" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Product
+                                        Name
+                                    </label>
+                                    <input id="name" name="pname" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label for="name" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Price 
+                                    </label>
+                                    <input id="name" name="pprice" type="number" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label for="category" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Category</label>
+                                    <select class="custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7" id="category" name="pcategory" required>
+                                        <option selected>Select one</option>
+                                        {% for item in categories %}
+                                        <option value="{{ item.p_category}}" name="select">{{ item.p_category}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label for="expire_date" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Expire
+                                        Date
+                                    </label>
+                                    <input id="expire_date" name="pexpire_date" type="date" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7"
+                                        data-large-mode="true" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label for="stock" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Units In
+                                        Stock
+                                    </label>
+                                    <input id="stock" name="punits" type="number" class="form-control validate col-xl-9 col-lg-8 col-md-7 col-sm-7" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
+                                        <button type="submit" name="add-product" class="btn btn-primary">Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-8">
+                <div class="bg-white tm-block">
+                    <div class="row">
+                        <div class="col-4">
+                            <h2 class="tm-block-title d-inline-block">Add Category</h2>
+                        </div>
+                    </div>
+                    <div class="row mt-4 tm-edit-product-row">
+                        <div class="col-xl-7 col-lg-7 col-md-12">
+                            <form action="/add-product/" class="tm-edit-product-form" method="POST">
+                              {% csrf_token %}
+                                <div class="input-group mb-3">
+                                    <label for="name" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Category
+                                    </label>
+                                    <input id="name" name="category" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label for="name" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Units Capacity
+                                    </label>
+                                    <input id="name" name="units" type="number" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
+                                </div>                                
+                                <div class="input-group mb-3">
+                                    <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
+                                        <button type="submit" name="add-category" class="btn btn-primary">Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% for message in messages %}
+                    <div class="alert alert-warning" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>{{message}}</strong>
+                    </div>
+                {% endfor %}                
+            </div>            
+        </div>
+    </div>
+
+    {% endblock content%}

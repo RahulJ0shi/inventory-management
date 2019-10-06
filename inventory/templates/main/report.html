@@ -1,0 +1,45 @@
+{% extends 'main/index.html' %}
+{% block content %}
+
+                <div class="col-xl-12 col-lg-12 tm-md-12 tm-sm-12 tm-col" style="margin-top: 30px;">
+                    <div class="bg-white tm-block h-100">
+                        <div class="row">
+                            <div class="col-md-8 col-sm-12">
+                                <h2 class="tm-block-title d-inline-block">Stock Report</h2>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table mt-3">
+                                <thead style="background-color: rgb(52,58,64); color: white;">
+                                    <tr class="tm-bg-gray tm-table-striped">
+                                        <th scope="col">No.</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col" class="text-center">Units</th>
+                                        <th scope="col" class="text-center">Total Cost</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in report_table %}
+                                    <tr>
+                                    	<th scope="col">{{forloop.counter}}</th>
+                                        <td class="tm-product-name">{{item.category}}</td>
+                                        <td class="text-center">{{item.units}}</td>
+                                        <td class="text-center">{{item.cost}}</td>
+                                    </tr> 
+                                    {% endfor %}                                   
+                                </tbody>
+                                <thead style="background-color: rgb(52,58,64); color: white;">
+                                    <tr class="tm-bg-gray tm-table-striped">
+                                        <th scope="col">&nbsp;</th>
+                                        <th scope="col">&nbsp;</th>
+                                        <th scope="col" class="text-center">{{total_units}}</th>
+                                        <th scope="col" class="text-center">{{total_cost}}</th>
+                                    </tr>
+                                </thead>                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+{% endblock content %}
