@@ -1,0 +1,84 @@
+{% extends 'main/index.html' %}
+{% block content %}
+        <div class="container">
+            <div class="row tm-content-row tm-mt-big">
+                <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 col-sm-12 tm-col">
+                	<form method="POST" action="/product/">
+                    <div class="bg-white tm-block h-100">
+                        <div class="row">
+                            <div class="col-xl-6 col-md-6 col-sm-12">
+                                <h2 class="tm-block-title d-inline-block">Products</h2>
+
+                            </div> 
+                            <div class="col-xl-3 col-md-3 col-sm-12 ">
+                                <a href="{% url 'export_product_csv' %}" class="btn btn-2 btn-small btn-primary">Export product</a>
+                            </div>                        
+                            <div class="col-xl-3 col-md-3 col-sm-12">
+                                <a href="{% url 'add_product' %}" class="btn btn-2 btn-small btn-primary">Add Product</a>
+                            </div>
+                        </div>
+                        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                            <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                                <thead>
+                                    <tr class="tm-bg-gray">
+                                        <th scope="col">&nbsp;</th>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col" class="text-center">price</th>
+                                        <th scope="col" class="text-center">In Stock</th>
+                                        <th scope="col">Expire Date</th>
+                                        <th scope="col">Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in my_text %}
+                                    <tr>
+                                        <th scope="row">
+                                        	{% csrf_token %}
+                                            <input type="checkbox" aria-label="Checkbox" name="item_name" value="{{item.name}}">
+                                        </th>
+                                        <td class="tm-product-name">{{item.name}}</td>
+                                        <td class="text-center">{{item.category}}</td>
+                                        <td class="text-center">{{item.price}}</td>
+                                        <td class="text-center">{{item.units}}</td>
+                                        <td>{{item.expire_date}}</td>
+                                        <td>
+                                        	<a href="{% url 'edit' pk=item.pk %}" class="fa fa-pencil fa-lg" title="Edit"></a>
+                                     	</td>
+                                    </tr>                                
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tm-table-mt tm-table-actions-row">
+                            <div class="tm-table-actions-col-left">
+                                <button type="submit" name="delete_selected" class="btn btn-2 btn-danger">Delete Selected Items</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+
+                <div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+                    <div class="bg-white tm-block h-100">
+                        <h2 class="tm-block-title d-inline-block">Product Categories</h2>
+                        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">                        
+                        <table class="table table-hover table-striped mt-3">
+                            <tbody>
+                                {% for cat in categories %}
+                                <tr>
+                                    <td>{{cat.p_category}}</td>
+                                    <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
+                                </tr>                                
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    	</div>
+                        <a href="{% url 'add_product' %}" class="btn btn-primary tm-table-mt">Add New Category</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock content%}

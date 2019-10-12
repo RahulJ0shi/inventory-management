@@ -1,0 +1,125 @@
+{% load staticfiles%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ADMIN</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href={% static "css/bootstrap.min.css" %}>
+  <link rel="stylesheet" href={% static "css/main.css" %}>
+
+</head>
+<body style="background: ">
+
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">STOCK MANAGER</a>
+    <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link " href="{% url 'report' %}">Reports</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'product' %}">Product</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'account' %}">Accounts</a>
+      </li>
+
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0 ml-auto" method="POST" action="{% url 'search_product' %}">
+      {% csrf_token %}
+      <input class="form-control mr-sm-2 search_bar" type="text" name="search_product" placeholder="Enter Product Name" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="search">Search</button>     
+    </form>
+      <li class="nav-item" style="list-style-type:none;">
+        <a class="nav-link" href="/admin/logout/">
+        <span style="color:#ff4a4a; "><b>Logout</b></span>
+        </a>
+      </li> 
+  </div>
+</nav>
+
+{% block content %}
+<div class="container">
+    <div class="row my-4">
+                <div class="col-xl-4 col-lg-12 col-sm-12 tm-md-12 tm-sm-12 tm-col">
+                    <div class="bg-white tm-block h-100">
+                        <div class="row">
+                            <div class="col-8">
+                                <h2 class="tm-block-title d-inline-block">Top Product List</h2>
+
+                            </div>
+                            <div class="col-4 text-right">
+                                <a href="/product/" class="tm-link-black">View All</a>
+                            </div>
+                        </div>
+                        <ol class="tm-list-group tm-list-group-alternate-color tm-list-group-pad-big">
+                            {% for i in items %}
+                            {% if forloop.counter <= 7 %}
+                            <li class="tm-list-group-item">
+                                {{ i.name }}
+                            </li>
+                            {% endif %}                            
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">                
+                        <div id="graph_container"></div>
+                          <script src="https://code.highcharts.com/highcharts.src.js"></script>
+                          <script>
+                                Highcharts.chart('graph_container', {
+                                  chart: {
+                       				height:550,
+                                    type: 'column'
+                                  },
+                                  title: {
+                                    text: 'Product Graph by No. of Units'
+                                  },
+                                  xAxis: {
+                                    categories: [{% for entry in graph_data %}'{{ entry.category }}'{% if not forloop.last %}, {% endif %}{% endfor %}
+                                    ]
+                                  },
+                                  plotOptions: {
+                                    series: {
+                                    	maxPointWidth: 50,
+                                        
+                                    }
+                                  },
+                                  series: [{
+                                    name: 'Units present',
+                                    data: [{% for entry in graph_data %}{{ entry.units }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+                                    color:"MediumSeaGreen"
+                                  }, {
+                                    name: 'Total Capacity',
+                                    data: [{% for entry in category %}{{ entry.capacity }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+                                    color:"DodgerBlue"
+                                  }]
+                                });
+                          </script>
+                        </div>
+</div>
+
+{% endblock content %}
+    <script src={% static "js/jquery-3.3.1.min.js" %}></script>
+    <script src={% static "js/bootstrap.min.js" %}></script>
+    <script type="text/javascript">
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+    </script>
+</body>
+</html>
